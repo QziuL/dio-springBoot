@@ -1,14 +1,22 @@
 package qziul_web_api.repository;
 
 import org.springframework.stereotype.Repository;
+import qziul_web_api.handler.BusinessException;
+import qziul_web_api.handler.RequiredException;
 import qziul_web_api.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class UserRepository {
     public void save(User user) {
+        if(Objects.isNull(user.getLogin()))
+            throw new RequiredException("login");
+        if(Objects.isNull(user.getPassword()))
+            throw new RequiredException("password");
+
         if(user.getId() == null)
             System.out.println("SAVE - Recebendo o usuário na camada de repositório");
         else
